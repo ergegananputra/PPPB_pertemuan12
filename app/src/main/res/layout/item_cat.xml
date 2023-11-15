@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        app:cardElevation="3dp"
+        app:contentPaddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/image_view_thumbnail"
+                android:layout_width="0dp"
+                android:layout_height="400dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="-4dp"
+                android:alpha="0.9"
+                android:background="?android:attr/colorBackground"
+                app:layout_constraintBottom_toBottomOf="@+id/image_view_thumbnail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_name" />
+
+
+            <TextView
+                android:id="@+id/tv_origin"
+                style="@style/Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="United State"
+                android:textAlignment="textEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical"
+                app:layout_constraintTop_toTopOf="@+id/tv_name" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                style="@style/Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/image_view_thumbnail"
+                app:layout_constraintEnd_toStartOf="@+id/guideline_vertical"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <ImageView
+                android:id="@+id/image_monitor"
+                style="@style/icon"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/baseline_monitor_weight_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_view_thumbnail"
+                app:tint="?attr/colorTertiary" />
+
+            <TextView
+                android:id="@+id/tv_mass_label"
+                style="@style/Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Mass"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/image_monitor"
+                app:layout_constraintTop_toTopOf="@+id/image_monitor" />
+
+            <TextView
+                android:id="@+id/tv_mass"
+                style="@style/Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="10 -20"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/image_monitor"
+                app:layout_constraintStart_toStartOf="@+id/tv_mass_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mass_label"
+                app:layout_constraintVertical_bias="0.17000002" />
+
+            <TextView
+                android:id="@+id/tv_mass_unit"
+                style="@style/Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Kgs"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_mass"
+                app:layout_constraintStart_toEndOf="@+id/tv_mass"
+                app:layout_constraintTop_toTopOf="@+id/tv_mass"
+                app:layout_constraintVertical_bias="0.75" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                style="@style/Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Lorem Ipsum Dolor Siamet"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_temperament" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/listDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mass" />
+
+            <ImageView
+                android:id="@+id/image_lifespan"
+                style="@style/icon"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/baseline_favorite_24"
+                app:layout_constraintStart_toStartOf="@+id/guideline_vertical"
+                app:layout_constraintTop_toBottomOf="@+id/image_view_thumbnail"
+                app:tint="#8E1874" />
+
+            <TextView
+                android:id="@+id/tv_lifespan_label"
+                style="@style/Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Lifespan"
+                android:textSize="16sp"
+                app:layout_constraintStart_toEndOf="@+id/image_lifespan"
+                app:layout_constraintTop_toTopOf="@+id/image_lifespan" />
+
+            <TextView
+                android:id="@+id/tv_lifespan"
+                style="@style/Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12 - 37"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_lifespan_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lifespan_label" />
+
+            <TextView
+                android:id="@+id/tv_lifespan_unit"
+                style="@style/Regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Yrs"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_lifespan"
+                app:layout_constraintStart_toEndOf="@+id/tv_lifespan"
+                app:layout_constraintTop_toBottomOf="@+id/tv_lifespan_label"
+                app:layout_constraintVertical_bias="0.75" />
+
+            <TextView
+                android:id="@+id/tv_temperament_label"
+                style="@style/Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Temperament"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <TextView
+                android:id="@+id/tv_temperament"
+                style="@style/Regular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:text="Alert, Agile, Energetic, Demanding, Intelligent"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_temperament_label"
+                app:layout_constraintTop_toBottomOf="@+id/tv_temperament_label" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

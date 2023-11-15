@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.latihanbyrg.tugaspertemuan12"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.latihanbyrg.tugaspertemuan12"
@@ -33,9 +33,24 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+
+    }
 }
 
 dependencies {
+    //API Square UP
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    //API Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    //Swipe Refresh Layout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
