@@ -19,6 +19,7 @@ import com.latihanbyrg.tugaspertemuan12.model.Cat
 
 class ExplorerFragment : Fragment() {
     private lateinit var catViewModel: CatViewModel
+    private lateinit var catAdapter: CatAdapter
 
 
     private val binding by lazy {
@@ -51,12 +52,17 @@ class ExplorerFragment : Fragment() {
         }
 
         // Recycler View
-        catRecycler(catViewModel.catExplorer.value ?: ArrayList())
+        catRecycler()
 
 
-        catViewModel.catExplorer.observe(viewLifecycleOwner, Observer { list ->
-            val adapter = CatAdapter(
-                cats = list,
+    }
+
+
+
+    private fun catRecycler() {
+        catViewModel.catExplorer.observe(viewLifecycleOwner){
+            catAdapter = CatAdapter(
+                cats = it,
                 onClickBookmark = {catData ->
 
 
@@ -83,49 +89,10 @@ class ExplorerFragment : Fragment() {
 
                 }
             )
-            binding.rvCards.adapter = adapter
-            adapter.notifyDataSetChanged()
-        })
 
-
-
-
-    }
-
-
-
-    private fun catRecycler(listCats: ArrayList<Cat>) {
-        with(binding) {
-            rvCards.apply {
-                adapter = CatAdapter(
-                    cats = listCats,
-                    onClickBookmark = {catData ->
-
-                        catViewModel.addCat(
-                            CatTable(
-                                catId = catData.id,
-                                url = catData.url ?: "https://avatars.githubusercontent.com/u/126530940?s=96&v=4",
-                                weight = catData.breeds[0].weight.metric,
-                                name = catData.breeds[0].name,
-                                temperament = catData.breeds[0].temperament,
-                                origin = catData.breeds[0].origin,
-                                description = catData.breeds[0].description,
-                                lifeSpan = catData.breeds[0].lifeSpan,
-                            )
-                        )
-                        adapter?.notifyItemInserted(listCats.size)
-                        Log.i("catData", catData.toString())
-
-                        Snackbar.make(
-                            binding.root,
-                            "Cat has been added to bookmark",
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-
-
-                    }
-                )
-                layoutManager = LinearLayoutManager(context)
+            binding.rvCards.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = catAdapter
             }
         }
     }

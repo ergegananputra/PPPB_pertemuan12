@@ -74,43 +74,40 @@ class BookmarkFragment : Fragment() {
 
 
         // Recycler View
-        catTableAdapter = CatTableAdapter(
-            cats = catViewModel.catList.value ?: emptyList(),
-            onLongPressCard = { catData ->
-                // intent to Edit Activity
-                val intentToEditActivity = Intent(activity, EditActivity::class.java)
-                    .apply {
-                        putExtra(EXTRA_CAT_ID, catData.catId)
-                        putExtra(EXTRA_PET_NAME, catData.petName)
-                        putExtra(EXTRA_IMAGE_URL, catData.url)
-                        putExtra(EXTRA_DESCRIPTION, catData.description)
-                    }
-                launcher.launch(intentToEditActivity)
-            },
-            onClickBookmark = { catData ->
-                val position = catViewModel.catList.value?.indexOf(catData) ?: -1
-                catViewModel.unBookmarkCat(catData)
-                catTableAdapter.notifyItemRemoved(position)
-            }
-        )
-
         catRecycler()
-        catViewModel.catList.observe(viewLifecycleOwner) {
-            binding.rvCards .apply {
-                adapter = catTableAdapter
-                layoutManager = LinearLayoutManager(context)
-            }
-
-            catTableAdapter.notifyDataSetChanged()
-        }
 
     }
 
     private fun catRecycler() {
-        with(binding) {
-            rvCards.apply {
+        catViewModel.catList.observe(viewLifecycleOwner){
+            // Adapter
+            catTableAdapter = CatTableAdapter(
+                cats = catViewModel.catList.value ?: emptyList(),
+                onLongPressCard = { catData ->
+                    // intent to Edit Activity
+                    val intentToEditActivity = Intent(activity, EditActivity::class.java)
+                        .apply {
+                            putExtra(EXTRA_CAT_ID, catData.catId)
+                            putExtra(EXTRA_PET_NAME, catData.petName)
+                            putExtra(EXTRA_IMAGE_URL, catData.url)
+                            putExtra(EXTRA_DESCRIPTION, catData.description)
+                        }
+                    launcher.launch(intentToEditActivity)
+                },
+                onClickBookmark = { catData ->
+                    val position = catViewModel.catList.value?.indexOf(catData) ?: -1
+                    if (position != -1) {
+                        catViewModel.unBookmarkCat(catData)
+                        catTableAdapter.notifyItemRemoved(position)
+                    }
+                }
+            )
+
+
+
+            binding.rvCards.apply {
+                layoutManager = LinearLayoutManager(activity)
                 adapter = catTableAdapter
-                layoutManager = LinearLayoutManager(context)
             }
         }
     }

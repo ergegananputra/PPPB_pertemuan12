@@ -80,7 +80,7 @@ class Repository(
     fun deleteCat(catTable: CatTable) {
         executorService.execute {
             catDao.delete(catTable)
-            Log.w("Repository", "deleteCat: $catTable")
+            Log.d("Repository", "deleteCat: $catTable")
         }
     }
 
