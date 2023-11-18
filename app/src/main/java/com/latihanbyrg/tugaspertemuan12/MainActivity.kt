@@ -5,30 +5,31 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.latihanbyrg.tugaspertemuan12.adapter.CatAdapter
-import com.latihanbyrg.tugaspertemuan12.api.ApiClient
-import com.latihanbyrg.tugaspertemuan12.api.ApiService
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.latihanbyrg.tugaspertemuan12.databinding.ActivityMainBinding
-import com.latihanbyrg.tugaspertemuan12.model.Cat
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var explorerFragment : Fragment
+    private lateinit var bookmarkFragment : Fragment
+    private lateinit var catViewModel: CatViewModel
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
-    private val listCats by lazy {
-        ArrayList<Cat>()
-    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val factory = CatViewModelFactory((application as CatOPiasApplication).repository)
+        catViewModel = ViewModelProvider(this, factory)[CatViewModel::class.java]
+
 
         // Full Screen Window
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -44,16 +45,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         setContentView(binding.root)
+        catViewModel.fetchExplorerData(this)
 
-        val client = ApiClient.getInstance()
-        fetchData(client)
+        explorerFragment = ExplorerFragment()
+        bookmarkFragment = BookmarkFragment()
 
-        // Swipe Refresh Layout
-        binding.swipeRefresh.setOnRefreshListener {
-            listCats.clear()
-            fetchData(client)
-            binding.swipeRefresh.isRefreshing = false
-        }
 
         // Button exit
         binding.toolbarContainer.buttonExit.setOnClickListener {
@@ -68,64 +64,32 @@ class MainActivity : AppCompatActivity() {
                     .setNegativeButton("No", null)
                     .show()
             }
-
-
         }
 
 
-
-    }
-
-    private fun fetchData(client: ApiService) {
-        val breeds = listOf(
-            "beng",
-            "amis",
-            "bslo",
-            "bamb",
-            "bali",
-            "birm",
-            "awir",
-            "abys",
-            "acur",
-        )
-
-        breeds.forEach { breed ->
-            client.getCat(breed).enqueue(object : Callback<List<Cat>> {
-                override fun onResponse(
-                    call: Call<List<Cat>>,
-                    response: Response<List<Cat>>
-                ) {
-                    val cats = response.body()
-                    if (response.isSuccessful) {
-                        if (cats != null) {
-                            listCats.addAll(cats)
-                            catRecycler(listCats)
-                        }
-                    } else if (response.code() == 404) {
-                        Toast.makeText(this@MainActivity, "Not Found", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@MainActivity, "Something Went Wrong", Toast.LENGTH_SHORT).show()
-                    }
+        // Bottom Navigation
+        binding.bottomNavigationView.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.explorerFragment -> {
+                    replaceFragment(explorerFragment)
+                    true
                 }
-
-                override fun onFailure(
-                    call: Call<List<Cat>>,
-                    t: Throwable
-                ) {
-                    Toast.makeText(this@MainActivity, "Failed", Toast.LENGTH_SHORT).show()
+                R.id.bookmarkFragment -> {
+                    replaceFragment(bookmarkFragment)
+                    true
                 }
-            })
-        }
-    }
-
-
-    private fun catRecycler(listCats: ArrayList<Cat>) {
-        with(binding) {
-            rvCards.apply {
-                adapter = CatAdapter(listCats)
-                layoutManager = LinearLayoutManager(this@MainActivity)
+                else -> false
             }
         }
+
+
+
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host, fragment)
+            .commit()
     }
 
 

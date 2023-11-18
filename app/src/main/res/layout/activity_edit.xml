@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="200dp">
+
+            <ImageView
+                android:id="@+id/image_view_thumbnail"
+                android:layout_width="0dp"
+                android:layout_height="400dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/placeholder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/edit_text_nama_peliharaan"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="14dp"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_rounded_rectangle"
+                android:fontFamily="@font/open_sans"
+                android:hint="Nama Peliharaan"
+                android:maxLines="1"
+                app:layout_constraintEnd_toEndOf="@+id/image_view_thumbnail"
+                app:layout_constraintStart_toStartOf="@+id/image_view_thumbnail"
+                app:layout_constraintTop_toBottomOf="@+id/image_view_thumbnail" />
+
+
+            <EditText
+                android:id="@+id/edit_text_deskripsi"
+                android:paddingVertical="14dp"
+                android:paddingHorizontal="14dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="50dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edit_text_rounded_rectangle"
+                android:fontFamily="@font/open_sans"
+                android:hint="Deskripsi"
+                android:inputType="textMultiLine"
+                app:layout_constraintEnd_toEndOf="@+id/image_view_thumbnail"
+                app:layout_constraintStart_toStartOf="@+id/image_view_thumbnail"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_nama_peliharaan" />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_simpan"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="32dp"
+                android:backgroundTint="?attr/colorPrimary"
+                android:elevation="4dp"
+                android:text="Simpan"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintEnd_toEndOf="@+id/edit_text_deskripsi"
+                app:layout_constraintStart_toStartOf="@+id/edit_text_deskripsi"
+                app:layout_constraintTop_toBottomOf="@+id/edit_text_deskripsi" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

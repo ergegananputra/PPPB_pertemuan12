@@ -16,5 +16,7 @@ data class Cat(
     var width  : Int?= null,
 
     @SerializedName("height")
-    var height : Int?= null
+    var height : Int?= null,
+
+    var isBookmark: Boolean = false
 )

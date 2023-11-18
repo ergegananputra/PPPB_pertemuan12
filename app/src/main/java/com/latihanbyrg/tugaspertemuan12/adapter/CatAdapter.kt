@@ -4,11 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.latihanbyrg.tugaspertemuan12.R
 import com.latihanbyrg.tugaspertemuan12.databinding.ItemCatBinding
 import com.latihanbyrg.tugaspertemuan12.model.Cat
 
+typealias OnClickBookmark = (Cat) -> Unit
 class CatAdapter(
-    private val cats: ArrayList<Cat>
+    private val cats: ArrayList<Cat>,
+    private val onClickBookmark: OnClickBookmark
 ) : RecyclerView.Adapter<CatAdapter.ItemCatViewHolder>() {
     inner class ItemCatViewHolder(
         private val binding: ItemCatBinding
@@ -22,11 +25,33 @@ class CatAdapter(
                 tvLifespan.text = data.breeds[0].lifeSpan
                 tvMass.text = data.breeds[0].weight.metric
 
+                // change button bookmark icon
+                if (data.isBookmark) {
+                    buttonBookmark.setImageResource(R.drawable.baseline_bookmark_24)
+                } else {
+                    buttonBookmark.setImageResource(R.drawable.baseline_bookmark_border_24)
+                }
+
 
                 // Image Glide
                 Glide.with(itemView.context)
                     .load(data.url)
                     .into(binding.imageViewThumbnail)
+
+                buttonBookmark.setOnClickListener {
+                    if (data.isBookmark) {
+                        // change button bookmark icon
+                        buttonBookmark.setImageResource(R.drawable.baseline_bookmark_border_24)
+//                        onClickBookmark(data)
+                        data.isBookmark = !data.isBookmark
+                    } else {
+                        // change button bookmark icon
+                        buttonBookmark.setImageResource(R.drawable.baseline_bookmark_24)
+                        onClickBookmark(data)
+                        data.isBookmark = !data.isBookmark
+                    }
+
+                }
             }
         }
 

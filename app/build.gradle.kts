@@ -1,6 +1,12 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+
+    // safe args
+    id("androidx.navigation.safeargs.kotlin")
+
+    // Kotlin KSP
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -10,7 +16,7 @@ android {
     defaultConfig {
         applicationId = "com.latihanbyrg.tugaspertemuan12"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -41,10 +47,23 @@ android {
 }
 
 dependencies {
+    // ROOM
+    implementation("androidx.room:room-ktx:2.6.0")
+    implementation("androidx.room:room-runtime:2.6.0")
+    ksp("androidx.room:room-compiler:2.6.0")
+
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+
+
     //API Square UP
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    // Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
 
     //API Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
