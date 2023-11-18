@@ -98,7 +98,6 @@ class BookmarkFragment : Fragment() {
                     val position = catViewModel.catList.value?.indexOf(catData) ?: -1
                     if (position != -1) {
                         catViewModel.unBookmarkCat(catData)
-                        catTableAdapter.notifyItemRemoved(position)
                     }
                 }
             )
