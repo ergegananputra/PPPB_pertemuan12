@@ -7,7 +7,6 @@ import com.bumptech.glide.Glide
 import com.latihanbyrg.tugaspertemuan12.R
 import com.latihanbyrg.tugaspertemuan12.database.model.CatTable
 import com.latihanbyrg.tugaspertemuan12.databinding.ItemCatBinding
-import com.latihanbyrg.tugaspertemuan12.model.Cat
 
 
 typealias CatListener = (CatTable) -> Unit

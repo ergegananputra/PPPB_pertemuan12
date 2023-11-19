@@ -2,19 +2,16 @@ package com.latihanbyrg.tugaspertemuan12
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.latihanbyrg.tugaspertemuan12.adapter.CatAdapter
 import com.latihanbyrg.tugaspertemuan12.database.model.CatTable
 import com.latihanbyrg.tugaspertemuan12.databinding.FragmentExplorerBinding
-import com.latihanbyrg.tugaspertemuan12.model.Cat
-
 
 
 class ExplorerFragment : Fragment() {
@@ -80,10 +77,10 @@ class ExplorerFragment : Fragment() {
                     )
                     Log.i("catData", catData.toString())
 
-                    Snackbar.make(
-                        binding.root,
+                    Toast.makeText(
+                        context,
                         "Cat has been added to bookmark",
-                        Snackbar.LENGTH_SHORT
+                        Toast.LENGTH_SHORT
                     ).show()
 
 

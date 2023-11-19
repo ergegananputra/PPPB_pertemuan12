@@ -2,9 +2,14 @@ package com.latihanbyrg.tugaspertemuan12
 
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Window
+import android.view.WindowManager
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.bumptech.glide.Glide
 import com.latihanbyrg.tugaspertemuan12.databinding.ActivityEditBinding
 
@@ -16,6 +21,20 @@ class EditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Full Screen Window
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val windowInsetsController = WindowInsetsControllerCompat(window, window.decorView)
+            windowInsetsController.hide(WindowInsetsCompat.Type.statusBars())
+        } else {
+            // Deprecated API BELOW 30
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+
         setContentView(binding.root)
 
         val catId = intent.getStringExtra(EXTRA_CAT_ID)
