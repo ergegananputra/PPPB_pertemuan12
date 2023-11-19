@@ -42,7 +42,6 @@ class CatAdapter(
                     if (data.isBookmark) {
                         // change button bookmark icon
                         buttonBookmark.setImageResource(R.drawable.baseline_bookmark_border_24)
-//                        onClickBookmark(data)
                         data.isBookmark = !data.isBookmark
                     } else {
                         // change button bookmark icon
