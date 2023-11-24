@@ -3,18 +3,17 @@ package com.latihanbyrg.tugaspertemuan12.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.latihanbyrg.tugaspertemuan12.api.ApiClient
 import com.latihanbyrg.tugaspertemuan12.api.ApiService
-import com.latihanbyrg.tugaspertemuan12.database.controller.CatTableDao
 import com.latihanbyrg.tugaspertemuan12.database.model.CatTable
 import com.latihanbyrg.tugaspertemuan12.model.Cat
-import kotlinx.coroutines.flow.Flow
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
-class Repository(
-    private val catDao: CatTableDao,
-) {
+class Repository {
+
+    private val firebase = Firebase.firestore
+    val catCollectionRef = firebase.collection("catsCollections")
 
     // Getter
     private val _catsExplorer = MutableLiveData<ArrayList<Cat>>()
@@ -23,16 +22,15 @@ class Repository(
 
     val client: ApiService = ApiClient.getInstance()
 
-    val catsBookmarks: Flow<List<CatTable>> = catDao.allCats
-
-    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+    val catsBookmarks: MutableLiveData<List<CatTable>> by lazy {
+        MutableLiveData<List<CatTable>>()
+    }
 
 
     // Methods
     fun clearExplorerData() {
         _catsExplorer.value?.clear()
     }
-
 
 
 
@@ -55,31 +53,41 @@ class Repository(
     // CRUD
 
     fun insertCat(catTable: CatTable) {
-        executorService.execute {
-            catDao.insert(catTable)
-            Log.i("Repository", "insertCat: $catTable")
+        catCollectionRef.add(catTable).addOnSuccessListener { documentReference ->
+            Log.d("Repository", "DocumentSnapshot written with ID: ${documentReference.id}")
+            catTable.id = documentReference.id
+            documentReference.set(catTable).addOnFailureListener {
+                Log.w("Repository", "Error adding document", it)
+            }
+        }.addOnFailureListener { e ->
+            Log.w("Repository", "Error adding document", e)
         }
     }
 
 
     fun updateCat(catTable: CatTable) {
-        executorService.execute {
-            catDao.update(catTable)
-            Log.w("Repository", "updateCat: $catTable")
+        Log.d("Repository", "updateCat: $catTable")
+        catCollectionRef.document(catTable.id).set(catTable).addOnFailureListener {
+            Log.e("Repository", "Error updating cat", it)
         }
     }
 
     fun updatePetNameAndDescription(catId: String, petName: String, description: String) {
-        executorService.execute {
-            catDao.updatePetNameAndDescription(catId, petName, description)
-            Log.w("Repository", "updatePetNameAndDescription: $catId, $petName, $description")
-        }
+        Log.d("Repository", "updatePetNameAndDescription: $catId, $petName, $description")
+        catCollectionRef.document(catId).update("petName", petName, "description", description)
+            .addOnFailureListener {
+                Log.e("Repository", "Error updating petName and description", it)
+            }
+
     }
 
     fun deleteCat(catTable: CatTable) {
-        executorService.execute {
-            catDao.delete(catTable)
-            Log.d("Repository", "deleteCat: $catTable")
+        if (catTable.id.isEmpty()) {
+            Log.e("Repository", "deleteCat: missing cat id")
+            return
+        }
+        catCollectionRef.document(catTable.id).delete().addOnFailureListener {
+            Log.e("Repository", "Error deleting cat", it)
         }
     }
 

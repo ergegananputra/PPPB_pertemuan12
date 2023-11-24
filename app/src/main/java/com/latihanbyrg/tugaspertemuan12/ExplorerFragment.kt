@@ -65,7 +65,7 @@ class ExplorerFragment : Fragment() {
 
                     catViewModel.addCat(
                         CatTable(
-                            catId = catData.id,
+                            catId = catData.id ?: "0",
                             url = catData.url ?: "https://avatars.githubusercontent.com/u/126530940?s=96&v=4",
                             weight = catData.breeds[0].weight.metric,
                             name = catData.breeds[0].name,

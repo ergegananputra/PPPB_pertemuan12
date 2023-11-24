@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.latihanbyrg.tugaspertemuan12.database.model.CatTable
 import com.latihanbyrg.tugaspertemuan12.model.Cat
@@ -16,10 +16,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CatViewModel(private val repository: Repository) : ViewModel(){
+class CatViewModel(val repository: Repository) : ViewModel(){
     val catExplorer : LiveData<ArrayList<Cat>> = repository.catExplorer
 
-    var catList : LiveData<List<CatTable>> = repository.catsBookmarks.asLiveData()
+    var catList : MutableLiveData<List<CatTable>> = repository.catsBookmarks
 
     fun addCat(catTable: CatTable) = viewModelScope.launch {
         repository.insertCat(catTable)

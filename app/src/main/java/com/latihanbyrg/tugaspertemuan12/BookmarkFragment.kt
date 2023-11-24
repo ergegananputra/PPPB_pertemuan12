@@ -17,6 +17,7 @@ import com.latihanbyrg.tugaspertemuan12.EditActivity.Companion.EXTRA_DESCRIPTION
 import com.latihanbyrg.tugaspertemuan12.EditActivity.Companion.EXTRA_IMAGE_URL
 import com.latihanbyrg.tugaspertemuan12.EditActivity.Companion.EXTRA_PET_NAME
 import com.latihanbyrg.tugaspertemuan12.adapter.CatTableAdapter
+import com.latihanbyrg.tugaspertemuan12.database.model.CatTable
 import com.latihanbyrg.tugaspertemuan12.databinding.FragmentBookmarkBinding
 
 class BookmarkFragment : Fragment() {
@@ -69,8 +70,21 @@ class BookmarkFragment : Fragment() {
 
 
         // Recycler View
+        observeBookmark()
         catRecycler()
 
+    }
+
+    private fun observeBookmark() {
+        catViewModel.repository.catCollectionRef.addSnapshotListener { snapshots, error ->
+            if (error != null) {
+                Log.w("BookmarkFragment", "Listen failed.", error)
+            }
+            val cats = snapshots?.toObjects(CatTable::class.java)
+            if (cats != null) {
+                catViewModel.repository.catsBookmarks.postValue(cats)
+            }
+        }
     }
 
     private fun catRecycler() {
@@ -93,7 +107,7 @@ class BookmarkFragment : Fragment() {
                     // intent to Edit Activity
                     val intentToEditActivity = Intent(activity, EditActivity::class.java)
                         .apply {
-                            putExtra(EXTRA_CAT_ID, catData.catId)
+                            putExtra(EXTRA_CAT_ID, catData.id)
                             putExtra(EXTRA_PET_NAME, catData.petName)
                             putExtra(EXTRA_IMAGE_URL, catData.url)
                             putExtra(EXTRA_DESCRIPTION, catData.description)
